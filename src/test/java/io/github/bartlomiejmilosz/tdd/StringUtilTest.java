@@ -1,6 +1,7 @@
 package io.github.bartlomiejmilosz.tdd;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,24 +11,46 @@ import java.util.stream.Stream;
 
 public class StringUtilTest {
 
-    @Test
-    void LimitReached_StringTruncates() {
+    @ParameterizedTest
+    @MethodSource("validLimitProvider")
+    void LimitReached_StringTruncates(int limit, String output) {
         String input = "The economy is about to";
-        int limit = 11;
 
-        Assertions.assertEquals("The economy...", StringUtil.truncate(input, limit));
+        Assertions.assertEquals(output, StringUtil.truncate(input, limit));
+    }
+
+    public static Stream<Arguments> validLimitProvider() {
+        return Stream.of(
+                Arguments.of(11, "The economy..."),
+                Arguments.of(1, "T...")
+        );
     }
 
     @ParameterizedTest
     @MethodSource("inputOutputLimitProvider")
     void limitNotReached_StringNotChanged(String input, int limit) {
-        Assertions.assertEquals("The economy is about to", StringUtil.truncate(input, limit));
+        String expected = "The economy is about to";
+        Assertions.assertEquals(expected, StringUtil.truncate(input, limit));
     }
 
     public static Stream<Arguments> inputOutputLimitProvider() {
+        String expected = "The economy is about to";
         return Stream.of(
-                Arguments.of("The economy is about to", 40),
-                Arguments.of("The economy is about to", 23)
+                Arguments.of(expected, 40),
+                Arguments.of(expected, expected.length())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidArgumentProvider")
+    void invalidInputIsRejected(String input, int limit) {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> StringUtil.truncate(input, limit));
+    }
+
+    public static Stream<Arguments> invalidArgumentProvider() {
+        return Stream.of(
+                Arguments.of(null, 5),
+                Arguments.of("Some input", 0)
         );
     }
 }
