@@ -53,4 +53,18 @@ public class StringUtilTest {
                 Arguments.of("Some input", 0)
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("shortInputLessOrEqualToEllipsis")
+    void inputShortenOrEqualThanLimit_StringNotChanged(String input, int limit) {
+        Assertions.assertEquals(input, StringUtil.truncate(input, limit));
+    }
+
+    public static Stream<Arguments> shortInputLessOrEqualToEllipsis() {
+        String input = "The";
+        return Stream.of(
+                Arguments.of(input, 2),
+                Arguments.of(input, 3)
+        );
+    }
 }
