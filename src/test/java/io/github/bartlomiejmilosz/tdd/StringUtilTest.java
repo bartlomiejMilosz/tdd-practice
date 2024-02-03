@@ -1,7 +1,6 @@
 package io.github.bartlomiejmilosz.tdd;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,10 +12,10 @@ public class StringUtilTest {
 
     @ParameterizedTest
     @MethodSource("validLimitProvider")
-    void LimitReached_StringTruncates(int limit, String output) {
+    void limitReached_StringTruncates(int limit, String output) {
         String input = "The economy is about to";
 
-        Assertions.assertEquals(output, StringUtil.truncate(input, limit));
+        Assertions.assertEquals(output, StringUtil.defaultTruncate(input, limit));
     }
 
     public static Stream<Arguments> validLimitProvider() {
@@ -30,7 +29,7 @@ public class StringUtilTest {
     @MethodSource("inputOutputLimitProvider")
     void limitNotReached_StringNotChanged(String input, int limit) {
         String expected = "The economy is about to";
-        Assertions.assertEquals(expected, StringUtil.truncate(input, limit));
+        Assertions.assertEquals(expected, StringUtil.defaultTruncate(input, limit));
     }
 
     public static Stream<Arguments> inputOutputLimitProvider() {
@@ -44,7 +43,7 @@ public class StringUtilTest {
     @ParameterizedTest
     @MethodSource("invalidArgumentProvider")
     void invalidInputIsRejected(String input, int limit) {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> StringUtil.truncate(input, limit));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> StringUtil.defaultTruncate(input, limit));
     }
 
     public static Stream<Arguments> invalidArgumentProvider() {
@@ -57,7 +56,7 @@ public class StringUtilTest {
     @ParameterizedTest
     @MethodSource("shortInputLessOrEqualToEllipsis")
     void inputShortenOrEqualThanLimit_StringNotChanged(String input, int limit) {
-        Assertions.assertEquals(input, StringUtil.truncate(input, limit));
+        Assertions.assertEquals(input, StringUtil.defaultTruncate(input, limit));
     }
 
     public static Stream<Arguments> shortInputLessOrEqualToEllipsis() {
@@ -65,6 +64,36 @@ public class StringUtilTest {
         return Stream.of(
                 Arguments.of(input, 2),
                 Arguments.of(input, 3)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("cutOffCharsProvider")
+    void customCutOffCharsNotBreakingOverallLogic(String expected ,String input, int limit, String cutOffChars) {
+        Assertions.assertEquals(expected, StringUtil.truncate(input, limit, cutOffChars));
+    }
+
+    public static Stream<Arguments> cutOffCharsProvider() {
+        String testIO = "The";
+        return Stream.of(
+                Arguments.of("The eco>>", "The economy", 7, ">>"),
+                Arguments.of(testIO, testIO, 3, ">>>"),
+                Arguments.of(testIO, testIO, 80, "custom-cutOff"),
+                Arguments.of("T&&", testIO, 1, "&&")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("blankInputProvider")
+    void blankOrEmptyInput(String input, int limit) {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> StringUtil.defaultTruncate(input, limit));
+    }
+
+    public static Stream<Arguments> blankInputProvider() {
+        int limit = 10;
+        return Stream.of(
+                Arguments.of("", limit),
+                Arguments.of("   ", limit)
         );
     }
 }
