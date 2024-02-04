@@ -77,4 +77,15 @@ public class PortfolioPositionTest {
 
         Assertions.assertEquals(11, portfolio.getPositions(microsoft).getQty());
     }
+
+    @Test
+    void portfolioWithSameStock_ReturnsCorrectAveragePrice() {
+        var portfolio = new Portfolio();
+
+        String microsoft = "MSFT";
+        portfolio.add(position(microsoft, 1, 240));
+        portfolio.add(position(microsoft, 1, 220));
+
+        Assertions.assertEquals(230, portfolio.getPositions("MSFT").getPx());
+    }
 }

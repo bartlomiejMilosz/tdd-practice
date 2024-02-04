@@ -2,8 +2,8 @@ package io.github.bartlomiejmilosz.tdd.portfolio.finalimplementation;
 
 public class Position {
     private final Stock stock;
-    private final int qty;
-    private final double px;
+    private int qty;
+    private double px;
 
     public Position(Stock stock, int qty, double px) {
         this.stock = stock;
@@ -25,5 +25,13 @@ public class Position {
 
     public double getValue() {
         return qty * px;
+    }
+
+    public void setQuantity(int newQty) {
+        this.qty = newQty;
+    }
+
+    public void setAveragePx(double newAveragePx) {
+        this.px = newAveragePx;
     }
 }

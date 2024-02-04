@@ -18,7 +18,20 @@ public class Portfolio {
 
     public void add(Position position) {
         String symbol = position.getStock().symbol();
-        positions.put(symbol, position);
+
+        // If the position already exists, update it
+        if (positions.containsKey(symbol)) {
+            Position existingPosition = positions.get(symbol);
+            int newQuantity = existingPosition.getQty() + position.getQty();
+            double newAveragePx = (existingPosition.getQty() * existingPosition.getPx()
+                    + position.getQty() * position.getPx()) / newQuantity;
+
+            existingPosition.setQuantity(newQuantity);
+            existingPosition.setAveragePx(newAveragePx);
+
+        } else {
+            positions.put(symbol, position);
+        }
     }
 
     public Position getPositions(String symbol) {
