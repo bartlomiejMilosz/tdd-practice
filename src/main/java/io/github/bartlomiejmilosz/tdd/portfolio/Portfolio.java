@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Portfolio {
-    private List<Stock> stocks = new ArrayList<>();
-    private double totalValue;
+    private final List<Stock> stocks = new ArrayList<>();
 
+    private double totalValue;
     public void add(Stock stock) {
         stocks.add(stock);
     }
@@ -17,5 +17,9 @@ public class Portfolio {
         return stocks.stream()
                 .mapToDouble(Stock::totalValue)
                 .sum();
+    }
+
+    public List<Stock> getStocks() {
+        return stocks;
     }
 }
