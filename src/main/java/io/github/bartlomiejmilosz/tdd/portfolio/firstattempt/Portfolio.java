@@ -1,4 +1,4 @@
-package io.github.bartlomiejmilosz.tdd.portfolio;
+package io.github.bartlomiejmilosz.tdd.portfolio.firstattempt;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,7 @@
-package io.github.bartlomiejmilosz.tdd.portfolio;
+package io.github.bartlomiejmilosz.tdd.portfolio.firstattempt;
 
+import io.github.bartlomiejmilosz.tdd.portfolio.firstattempt.Portfolio;
+import io.github.bartlomiejmilosz.tdd.portfolio.firstattempt.Stock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

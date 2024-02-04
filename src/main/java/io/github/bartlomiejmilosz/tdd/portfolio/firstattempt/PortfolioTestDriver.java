@@ -1,6 +1,11 @@
-package io.github.bartlomiejmilosz.tdd.portfolio;
+package io.github.bartlomiejmilosz.tdd.portfolio.firstattempt;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PortfolioTestDriver {
+    private static final Logger LOGGER = Logger.getLogger(PortfolioTestDriver.class.getName());
+
     public static void main(String[] args) {
         var portfolio = new Portfolio();
         portfolio.add(new Stock("AAPL", 1, 140));
@@ -9,7 +14,7 @@ public class PortfolioTestDriver {
 
         var printer = new PortfolioPrinter(portfolio);
         printer.printPortfolio();
-        System.out.println("=================================");
-        System.out.println(portfolio.totalValue());
+        LOGGER.log(Level.INFO, "=================================");
+        LOGGER.log(Level.INFO, String.valueOf(portfolio.totalValue()));
     }
 }

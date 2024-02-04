@@ -1,5 +1,6 @@
-package io.github.bartlomiejmilosz.tdd;
+package io.github.bartlomiejmilosz.tdd.portfolio;
 
+import io.github.bartlomiejmilosz.tdd.StringUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

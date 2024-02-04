@@ -1,4 +1,4 @@
-package io.github.bartlomiejmilosz.tdd.portfolio;
+package io.github.bartlomiejmilosz.tdd.portfolio.firstattempt;
 
 public class Stock {
     private final String symbol;
