@@ -24,6 +24,18 @@ public class PortfolioTest {
 
     @Test
     void portfolioWithMultipleStocks_calculatesTotalValue() {
+        int microsoftQty = 10;
+        double microsoftPx = 260;
+        double microsoftValue = microsoftQty * microsoftPx;
 
+        int appleQty = 1;
+        double applePx = 150;
+        double appleValue = appleQty * applePx;
+
+        var portfolio = new Portfolio();
+        portfolio.add(new Stock("MSFT", microsoftQty, microsoftPx));
+        portfolio.add(new Stock("AAPL", appleQty, applePx));
+
+        Assertions.assertEquals(microsoftValue + appleValue, portfolio.totalValue());
     }
 }

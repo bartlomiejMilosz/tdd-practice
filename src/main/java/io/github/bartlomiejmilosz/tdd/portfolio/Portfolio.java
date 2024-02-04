@@ -1,16 +1,21 @@
 package io.github.bartlomiejmilosz.tdd.portfolio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Portfolio {
-    private Stock stock;
+    private List<Stock> stocks = new ArrayList<>();
     private double totalValue;
 
     public void add(Stock stock) {
-        this.stock = stock;
+        stocks.add(stock);
     }
 
     public double totalValue() {
-        if (stock == null)
+        if (stocks.isEmpty())
             return 0;
-        return stock.totalValue();
+        return stocks.stream()
+                .mapToDouble(Stock::totalValue)
+                .sum();
     }
 }
