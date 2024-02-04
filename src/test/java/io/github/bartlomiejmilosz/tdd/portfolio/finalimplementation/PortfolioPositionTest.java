@@ -12,12 +12,16 @@ public class PortfolioPositionTest {
     }
 
     @Test
-    void portfolioWithOneStock_calculatesTotalValue() {
-        int qty = 10;
-        double px = 260;
-
+    void portfolioWithOnePosition_ReturnsThatPosition() {
         var portfolio = new Portfolio();
-        portfolio.add(new Position(new Stock("MSFT"), qty, px));
-        Assertions.assertEquals(1, portfolio.getPositions().size());
+
+        String symbol = "MSFT";
+
+        portfolio.add(new Position(new Stock(symbol), 10, 260));
+        Assertions.assertEquals(1, portfolio.getAllPositions().size());
+
+        Assertions.assertEquals(10, portfolio.getPositions(symbol).getQty());
+        Assertions.assertEquals(260, portfolio.getPositions(symbol).getPx());
+        Assertions.assertEquals(2600, portfolio.getPositions(symbol).getValue());
     }
 }

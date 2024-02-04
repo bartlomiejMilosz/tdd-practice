@@ -10,4 +10,20 @@ public class Position {
         this.qty = qty;
         this.px = px;
     }
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public double getPx() {
+        return px;
+    }
+
+    public double getValue() {
+        return qty * px;
+    }
 }
