@@ -37,4 +37,10 @@ public class Portfolio {
     public Position getPositions(String symbol) {
         return positions.get(symbol);
     }
+
+    public double getTotalValue() {
+        return positions.values().stream()
+                .mapToDouble(Position::getValue)
+                .sum();
+    }
 }
